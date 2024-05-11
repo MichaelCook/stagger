@@ -34,12 +34,12 @@
 
 import abc
 import collections
-import imghdr
 from abc import abstractmethod
 from warnings import warn
 
 from stagger.errors import *
 from stagger.specs import *
+from stagger.util import imghdr_what
 
 try:
     from collections import Container
@@ -320,7 +320,7 @@ class PictureFrame(Frame):
                 self.data = file.read()
                 self.type = 0
                 self.desc = ""
-                format = imghdr.what(None, self.data[:32])
+                format = imghdr_what(None, self.data[:32])
                 if not format:
                     format = value.rpartition(".")[2]
                 self._set_format(format)

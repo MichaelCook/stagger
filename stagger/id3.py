@@ -33,12 +33,11 @@
 """List of frames defined in the various ID3 versions.
 """
 
-import imghdr
-
 import stagger.tags as tags
 from stagger.frames import *
 from stagger.specs import *
 from stagger.tags import frameclass
+from stagger.util import imghdr_what
 
 
 # ID3v2.4
@@ -422,7 +421,7 @@ class APIC(PictureFrame):
             
     def _str_fields(self):
         img = "{0} bytes of {1} data".format(len(self.data), 
-                                             imghdr.what(None, self.data[:32]))
+                                             imghdr_what(None, self.data[:32]))
         return ("type={0}, desc={1}, mime={2}: {3}"
                 .format(repr(self._spec("type").to_str(self.type)),
                         repr(self.desc),
@@ -819,7 +818,7 @@ class PIC(PictureFrame):
         elif self.format.upper() == "JPG":
             mime = "image/jpeg"
         else:
-            mime = imghdr.what(io.StringIO(self.data))
+            mime = imghdr_what(io.StringIO(self.data))
             if mime is None:
                 raise ValueError("Unknown image format")
             mime = "image/" + mime.lower()
@@ -827,7 +826,7 @@ class PIC(PictureFrame):
         
     def _str_fields(self):
         img = "{0} bytes of {1} data".format(len(self.data), 
-                                             imghdr.what(None, self.data[:32]))
+                                             imghdr_what(None, self.data[:32]))
         return ("type={0}, desc={1}, format={2}: {3}"
                 .format(repr(self._spec("type").to_str(self.type)),
                         repr(self.desc),

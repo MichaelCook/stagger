@@ -35,7 +35,6 @@ import struct
 import re
 import collections
 import io
-import imghdr
 import zlib
 
 from abc import abstractmethod, abstractproperty
@@ -47,6 +46,7 @@ from stagger.conversion import *
 
 import stagger.frames as Frames
 import stagger.fileutil as fileutil
+from stagger.util import imghdr_what
 
 try:
     from collections import MutableMapping
@@ -523,7 +523,7 @@ class Tag(MutableMapping, metaclass=abc.ABCMeta):
                                  .format(f._spec("type").to_str(f.type),
                                          f.desc,
                                          len(f.data),
-                                         imghdr.what(None, f.data[:32]))
+                                         imghdr_what(None, f.data[:32]))
                                  for f in self[frameid])
         def setter(self, value):
             if len(value) > 0:

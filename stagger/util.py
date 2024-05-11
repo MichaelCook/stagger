@@ -137,3 +137,8 @@ def print_warnings(filename, options):
                     print(filename + ":warning: " + str(w.message),
                           file=sys.stderr)
             sys.stderr.flush()
+
+def imghdr_what(file, h):
+    # imhdr.what was deprecated in PEP-0594
+    # See https://peps.python.org/pep-0594/#imghdr
+    return None
